@@ -33,8 +33,8 @@ class bookRepositoryClass {
 
             requestJSON.configSQL.table = 'book';
             let dbSQL = bookSQL.getBooks;
-            requestJSON.configSQL.book_name = requestJSON.params.book_name;
-            requestJSON.configSQL.book_genre = requestJSON.params.book_genre;
+            // requestJSON.configSQL.book_name = requestJSON.params.book_name;
+            // requestJSON.configSQL.book_genre = requestJSON.params.book_genre;
 
             db.any(dbSQL, requestJSON.configSQL).then((books) => {
                 resolve(books);
@@ -78,22 +78,33 @@ class bookRepositoryClass {
     public loginCustomer(requestJSON) {
         const dbPromise = new Promise((resolve, reject) => {
 
-            requestJSON.configSQL.table = 'book';
+            requestJSON.configSQL.table = 'customer';
             let dbSQL = bookSQL.loginCustomer;
             requestJSON.configSQL.username = requestJSON.customer.username;
             requestJSON.configSQL.password = requestJSON.customer.password;
 
-            db.any(dbSQL, requestJSON.configSQL).then((books) => {
-                resolve(books);
+            db.any(dbSQL, requestJSON.configSQL).then((customer) => {
+                resolve(customer);
             }).catch((error) => {
                 reject(error);
             })
         });
         return dbPromise;
     }
+    
+    public addCustomer(requestJSON) {
+        const dbPromise = new Promise((resolve, reject) => {
+            requestJSON.configSQL.table = 'customer';
+            let dbSQL = dbUtility.insertSQL(requestJSON.customer, requestJSON.configSQL);
 
-   
-
+            db.one(dbSQL, requestJSON.configSQL).then((customerId) => {
+                resolve(customerId);
+            }).catch((error) => {
+                reject(error);
+            })
+        });
+        return dbPromise;
+    }
 }
 
 export const bookRepository = new bookRepositoryClass();

@@ -28,17 +28,13 @@ class bookRouterClass {
     }
 
     public config(): void {
-
-
-
-
         this.router.get("/:id", (req, res, next) => { httpUtility.action(req, res, next, bookController.getBooksById) });
         this.router.get("/", (req, res, next) => { httpUtility.action(req, res, next, bookController.getBooks) });
         this.router.post("/", this.upload.single('book_image'),(req, res, next) => { httpUtility.action(req, res, next, bookController.addBooks) });
         this.router.put("/:id",this.upload.single('book_image'), (req, res, next) => { httpUtility.action(req, res, next, bookController.updateBooks) });
         this.router.delete("/:id", (req, res, next) => { httpUtility.action(req, res, next, bookController.deleteBooks) });
         this.router.post("/login",(req, res, next) => { httpUtility.action(req, res, next, bookController.loginCustomer) });
-
+        this.router.post("/signUp",(req, res, next) => { httpUtility.action(req, res, next, bookController.addCustomer) });
     }
 }
 

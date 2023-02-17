@@ -25,6 +25,7 @@ class appClass {
 
     //enabled authorization token
     this.app.use(securityUtility.validateToken);
+    
 
     //enabled base router
     this.app.use("/books/api/v1", baseRouter);
